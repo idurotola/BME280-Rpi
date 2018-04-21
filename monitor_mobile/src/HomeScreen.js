@@ -51,21 +51,22 @@ export default class HomeScreen extends React.Component {
     const d  = this._handle_draw_arc()
     return (
       <View style={styles.container}>
+
         <View style={styles.userDetailContainer}>
-          <Text style={styles.name}>Durotola Samuel Oluwaseun</Text>
-          <Text style={styles.dept}>Dept. of Physics</Text>
-          <Text style={styles.marticno}>14PY1013</Text>
+          <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
+          <Text style={styles.detail}>Dept. of Physics</Text>
+          <Text style={styles.detail}>14PY1013</Text>
+          <Text style={styles.detail}>Current Temp: {this.state.current_temperature} &deg; C</Text>
         </View>
-        <Text>TEMPERATURE {this.state.current_temperature}</Text>
         
         <View style={styles.containment}>
           <Svg height={400} width={400}>
-            <Svg.Circle cx={200} cy={200} r={150} stroke-width={10} stroke="#fff"  fill="#fff" />
+            <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
             <Text style={styles.tempStyle}>
-              {`${this.state.current_temperature} C`}
+              {this.state.current_temperature} &deg; C
             </Text>
-            <Svg.Path d={d} fill="none" stroke="#867DF2" stroke-width="15" />
-            <Svg.Circle cx={200} cy={200} r={120} stroke-width={1} stroke="#e74c3c"  fill="#e74c3c" />
+            <Svg.Path d={d} fill="none" stroke="#e74c3c" strokeWidth={10} />
+            <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2"  fill="#867DF2" />
           </Svg>
         </View>
       </View>
@@ -98,21 +99,13 @@ const styles = StyleSheet.create({
   userDetailContainer: {
     backgroundColor: '#3A3B5D',
   },
-  name: {
-    fontSize: 30,
-    color: "#FFF"
-  },
-  dept: {
-    fontSize: 30,
-    color: "#FFF"
-  },
-  marticno: {
+  detail: {
     fontSize: 30,
     color: "#FFF"
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#3A3B5D',
     alignItems: 'center',
     justifyContent: 'center',
   },
