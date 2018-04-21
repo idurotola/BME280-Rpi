@@ -5,6 +5,7 @@ import time
 
 # Initialize the pubnub service
 from pubnub.pnconfiguration import PNConfiguration
+from pubnub.exceptions import PubNubException
 from pubnub.pubnub import PubNub
 
 pnconfig = PNConfiguration()
