@@ -30,10 +30,19 @@ def read_temp():
     data = bme280.sample(bus, address, calibration_params)
     return data
 
+def handle_exception(e):
+	print("An error occured")
+	print(e)
+
 def push_to_pubnub(data):
     try:
-        envelope = pubnub.publish().channel(channel_name).message(data).sync()
-        print("publish timetoken: %d" % envelope.result.timetoken)
+        envelope = pubnub.publish().channel(channel_name).message({
+	    	"id": data.id,
+			"timestamp": data.timestamp,
+			"temperature": data.temperature,
+			"pressure": data.pressure,
+			"humidity": data.humidity
+	    }).sync()
     except PubNubException as e:
         handle_exception(e)
 
