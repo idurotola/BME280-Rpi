@@ -1,5 +1,6 @@
-import os
-import glob
+# Import the BME libraries
+import smbus2
+import bme280
 import time
 
 # Initialize the pubnub service
@@ -15,46 +16,26 @@ pubnub = PubNub(pnconfig)
 
 channel_name = "temperature_monitoring"
 
+# Configure the bme interface
+port = 1
+address = 0x77
+bus = smbus2.SMBus(port)
 
-# Configure the RaspberryPi bus for data
-# os.system('modprobe w1-gpio')
-# os.system('modprobe w1-therm')
-#
-# base_dir = '/sys/bus/w1/devices/'
-# device_folder = glob.glob(base_dir + '28*')[0]
-# device_file = device_folder + '/w1_slave'
+calibration_params = bme280.load_calibration_params(bus, address)
 
-# Read the temperature data rom RaspberryPi register
-def read_temp_raw():
-    f = open(device_file, 'r')
-    lines = f.readlines()
-    f.close()
-    return lines
-
+# the sample method will take a single reading and return a
+# compensated_reading object
 def read_temp():
-    lines = read_temp_raw()
-    while lines[0].strip()[-3:] != 'YES':
-        time.sleep(0.2)
-        lines = read_temp_raw()
-    equals_pos = lines[1].find('t=')
-    if equals_pos != -1:
-        temp_string = lines[1][equals_pos+2:]
-        temp_c = float(temp_string) / 1000.0
-        return temp_c
+    data = bme280.sample(bus, address, calibration_params)
 
-def push_to_pubnub(temp):
+def push_to_pubnub(data):
     try:
-        envelope = pubnub.publish().channel(channel_name).message({
-            'temp': temp,
-            'timestamp': time.time()
-        }).sync()
+        envelope = pubnub.publish().channel(channel_name).message(data).sync()
         print("publish timetoken: %d" % envelope.result.timetoken)
     except PubNubException as e:
         handle_exception(e)
 
 
 while True:
-	# print(read_temp())
-    # Read and push the temp
-    push_to_pubnub(45)
+    push_to_pubnub(read_temp())
 	time.sleep(1)
