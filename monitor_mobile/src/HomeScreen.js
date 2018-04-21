@@ -56,18 +56,18 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
           <Text style={styles.detail}>Dept. of Physics</Text>
           <Text style={styles.detail}>14PY1013</Text>
-          <Text style={styles.detail}>Current Temp: {this.state.current_temperature} &deg; C</Text>
         </View>
-        
-        <View style={styles.containment}>
-          <Svg height={400} width={400}>
-            <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
-            <View style={styles.tempContStyle}><Text> {this.state.current_temperature} &deg; C</Text></View>
-            <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
-            <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2"  fill="#867DF2" />
-          </Svg>
-        </View>
+
+        <Svg height={400} width={400} style={styles.svgContainer}>
+          <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
+          <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
+          <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2" fill="#867DF2" />
+          <View>
+            <Text style={styles.tempText}> {this.state.current_temperature} &deg;C</Text>
+          </View>
+        </Svg>
       </View>
+
     );
   }
 }
@@ -97,31 +97,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#3A3B5D',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   header: {
     fontSize: 30,
     color: "#FFF",
-    marginBottom: 20
+    marginVertical: 30,
+    textAlign: 'center'
   },
   detail: {
     fontSize: 25,
     color: "#FFF",
-    fontWeight: "300"
+    fontWeight: "300",
+    paddingVertical: 5,
+    textAlign: 'center'
   },
-  containment: {
+  tempText: {
+    fontSize: 60
+  },
+  svgContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3A3B5D'
-  },
-  tempContStyle: {
-    position: 'absolute'
-  },
-  tempStyle: {
-    height: 30,
-    width: 30,
-    borderRadius: 30,
-    backgroundColor: '#FFF'
+    justifyContent: 'center'
   }
 });
