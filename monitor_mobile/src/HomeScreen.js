@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import PubNubReact from 'pubnub-react';
+// import PubNubReact from 'pubnub-react';
+import PubNub from 'pubnub';
+ 
+
  
 const subscribeKey = "sub-c-24d83964-40ef-11e8-a2e8-d2288b7dcaaf";
 const publishKey = "pub-c-deda0dd4-b711-466b-8bbb-c12e7e0e43e0";
@@ -10,28 +13,35 @@ const channel_name = "temperature_monitoring";
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.pubnub = new PubNubReact({ 
-      publishKey: publishKey, 
-      subscribeKey: secretKey 
-    });
-    this.pubnub.init(this);
+    this.pubnub = new PubNub({
+      subscribeKey: subscribeKey,
+      publishKey: publishKey,
+      secretKey: secretKey,
+      ssl: true
+    })
   }
   
   state = {
     current_temperature: ''
   }
 
-  componentWillMount() {
-    this.pubnub.subscribe({ channels: [channel_name], withPresence: true });
-    
-    this.pubnub.getMessage(channel_name, (msg) => {
-      console.log(msg);
-      this.setState({ current_temperature: msg.temperature })
+  componentDidMount() {
+    this.pubnub.addListener({
+      message: (m) => this.setState({
+        current_temperature : Number(m.message.temperature).toFixed(2) 
+      }),
+      
+      status: function(s) {
+          var affectedChannelGroups = s.affectedChannelGroups;
+          var affectedChannels = s.affectedChannels;
+          var category = s.category;
+          var operation = s.operation;
+      }
     });
-    
-    this.pubnub.getStatus((st) => {
-      console.log(st);
-      this.pubnub.publish({ message: 'hello world from react', channel: channel_name });
+
+    this.pubnub.subscribe({
+      channels: [channel_name],
+      withPresence: true
     });
   }
   
@@ -45,12 +55,9 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    // const messages = this.pubnub.getMessage(channel_name);
-    console.log('Get message called :', messages);
     return (
       <View style={styles.container}>
-        <Text>TEMPERATURE</Text>
-        {/* {messages.map((m) => <Text>{m.current_temperature}</Text>)} */}
+        <Text>TEMPERATURE {this.state.current_temperature}</Text>
       </View>
     );
   }
