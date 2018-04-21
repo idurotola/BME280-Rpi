@@ -27,6 +27,7 @@ calibration_params = bme280.load_calibration_params(bus, address)
 # compensated_reading object
 def read_temp():
     data = bme280.sample(bus, address, calibration_params)
+    return data
 
 def push_to_pubnub(data):
     try:
