@@ -38,4 +38,4 @@ def push_to_pubnub(data):
 
 while True:
     push_to_pubnub(read_temp())
-	time.sleep(1)
+    time.sleep(1)
