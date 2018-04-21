@@ -51,7 +51,7 @@ export default class HomeScreen extends React.Component {
     const d  = this._handle_draw_arc()
     return (
       <View style={styles.container}>
-
+        <Text style={styles.header}>Remote Temperature Monitor</Text>
         <View style={styles.userDetailContainer}>
           <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
           <Text style={styles.detail}>Dept. of Physics</Text>
@@ -62,10 +62,8 @@ export default class HomeScreen extends React.Component {
         <View style={styles.containment}>
           <Svg height={400} width={400}>
             <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
-            <Text style={styles.tempStyle}>
-              {this.state.current_temperature} &deg; C
-            </Text>
-            <Svg.Path d={d} fill="none" stroke="#e74c3c" strokeWidth={10} />
+            <View style={styles.tempContStyle}><Text> {this.state.current_temperature} &deg; C</Text></View>
+            <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
             <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2"  fill="#867DF2" />
           </Svg>
         </View>
@@ -96,29 +94,31 @@ function describeArc(x, y, radius, startAngle, endAngle) {
 }
 
 const styles = StyleSheet.create({
-  userDetailContainer: {
-    backgroundColor: '#3A3B5D',
-  },
-  detail: {
-    fontSize: 30,
-    color: "#FFF"
-  },
   container: {
     flex: 1,
     backgroundColor: '#3A3B5D',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
+  },
+  header: {
+    fontSize: 30,
+    color: "#FFF",
+    marginBottom: 20
+  },
+  detail: {
+    fontSize: 25,
+    color: "#FFF",
+    fontWeight: "300"
   },
   containment: {
-    position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#3A3B5D',
-    bottom: 0
+    backgroundColor: '#3A3B5D'
+  },
+  tempContStyle: {
+    position: 'absolute'
   },
   tempStyle: {
-    position: 'absolute',
     height: 30,
     width: 30,
     borderRadius: 30,
