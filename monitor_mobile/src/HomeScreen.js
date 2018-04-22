@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   tempText: {
-    fontSize: 60
+    fontSize: 60,
+    color: "#FFF",
   },
   svgContainer: {
     alignItems: 'center',
