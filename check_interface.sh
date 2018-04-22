@@ -6,6 +6,9 @@ if [[ -n $2 ]]; then
     bus=$2
 fi
 
+echo "Copy the server to /home/pi/ is"
+cp ./main.py /home/pi/
+
 mapfile -t data < <(i2cdetect -y $bus)
 
 for i in $(seq 1 ${#data[@]}); do
