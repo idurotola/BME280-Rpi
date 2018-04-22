@@ -1,5 +1,12 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "name": "Remote Temperature Measurement",
+    "icon": "./icon.png",
+    "version": "1.0.0",
+    "slug": "know-remote-temperature-on-your-phone",
+    "sdkVersion": "26.0.0",
+    "android": {
+      "package": "com.greasenetwork.thermonitor"
+    }
   }
 }
