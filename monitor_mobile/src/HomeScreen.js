@@ -48,26 +48,34 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    const d  = this._handle_draw_arc()
+    const d  = this._handle_draw_arc();
+
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Remote Temperature Monitor</Text>
-        <View style={styles.userDetailContainer}>
-          <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
-          <Text style={styles.detail}>Dept. of Physics</Text>
-          <Text style={styles.detail}>14PY1013</Text>
+        <View style={styles.toolbar}>
+          <View style={styles.titleBox}>
+            <Text style={styles.title}>Remote Temperature Monitor</Text>
+          </View>
         </View>
 
-        <Svg height={400} width={400} style={styles.svgContainer}>
-          <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
-          <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
-          <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2" fill="#867DF2" />
-          <View>
-            <Text style={styles.tempText}> {this.state.current_temperature} &deg;C</Text>
+        <View style={styles.body}>
+          <Text style={styles.header}>Remote Temperature Monitor</Text>
+          <View style={styles.userDetailContainer}>
+            <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
+            <Text style={styles.detail}>Dept. of Physics</Text>
+            <Text style={styles.detail}>14PY1013</Text>
           </View>
-        </Svg>
-      </View>
 
+          <Svg height={400} width={400} style={styles.svgContainer}>
+            <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
+            <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
+            <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2" fill="#867DF2" />
+            <View>
+              <Text style={styles.tempText}> {this.state.current_temperature} &deg;C</Text>
+            </View>
+          </Svg>
+        </View>
+      </View>
     );
   }
 }
@@ -95,6 +103,23 @@ function describeArc(x, y, radius, startAngle, endAngle) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  toolbar: {
+    alignItems: 'center',
+    backgroundColor: '#292942',
+    elevation: 8,
+    flexDirection: 'row',
+    height: 56,
+    justifyContent: 'center',
+    padding: 4,
+  },
+  titleBox: {},
+  title: {
+    color: 'white',
+    fontSize: 22,
+  },
+  body: {
     flex: 1,
     backgroundColor: '#3A3B5D',
     alignItems: 'center'
