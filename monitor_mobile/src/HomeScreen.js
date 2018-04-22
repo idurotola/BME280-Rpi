@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import PubNub from 'pubnub';
 import { Constants, Svg } from 'expo';
  
+const width = Dimensions.get('window').width;
+
 const subscribeKey = "sub-c-24d83964-40ef-11e8-a2e8-d2288b7dcaaf";
 const publishKey = "pub-c-deda0dd4-b711-466b-8bbb-c12e7e0e43e0";
 const secretKey = "sec-c-NDQ4ZTMyZjctODQ3YS00M2U3LWI2ZjUtMjE3ZGM4Zjg3MGRj";
@@ -42,13 +44,17 @@ export default class HomeScreen extends React.Component {
     })
   }
 
-  _handle_draw_arc = () => {
+  _handle_draw_arc = width => {
     const angle = this.state.current_temperature/100 * 360;
-    return describeArc(200, 200, 138, 0, parseInt(angle));
+    const arcRadius = width/2.89855;
+    const arcX = arcY = width/2;
+
+    return describeArc(arcX, arcY, arcRadius, 0, parseInt(angle));
   }
 
   render() {
-    const d  = this._handle_draw_arc();
+    const svgWidth = width - 30;
+    const d  = this._handle_draw_arc(svgWidth);
 
     return (
       <View style={styles.container}>
@@ -59,17 +65,16 @@ export default class HomeScreen extends React.Component {
         </View>
 
         <View style={styles.body}>
-          <Text style={styles.header}>Remote Temperature Monitor</Text>
-          <View style={styles.userDetailContainer}>
-            <Text style={styles.detail}>Durotola Samuel Oluwaseun</Text>
-            <Text style={styles.detail}>Dept. of Physics</Text>
+          <View style={styles.contentBox}>
+            <Text style={[styles.detail, styles.name]}>Durotola Samuel Oluwaseun</Text>
+            <Text style={styles.detail}>Department of Physics</Text>
             <Text style={styles.detail}>14PY1013</Text>
           </View>
 
-          <Svg height={400} width={400} style={styles.svgContainer}>
-            <Svg.Circle cx={200} cy={200} r={140} strokeWidth={10} stroke="#fff"  fill="#fff" />
-            <Svg.Path d={d} fill="none" stroke="#F08824" strokeWidth={10} />
-            <Svg.Circle cx={200} cy={200} r={130} stroke-width={1} stroke="#867DF2" fill="#867DF2" />
+          <Svg height={svgWidth} width={svgWidth} style={styles.svgContainer}>
+            <Svg.Circle cx={svgWidth/2} cy={svgWidth/2} r={svgWidth/2.89855} strokeWidth={svgWidth/50} stroke="#efefef" fill="#efefef" />
+            <Svg.Path d={d} fill="none" stroke="#f08824" strokeWidth={svgWidth/50} />
+            <Svg.Circle cx={svgWidth/2} cy={svgWidth/2} r={svgWidth/2.9629} strokeWidth={1} stroke="#fff" fill="#fff" />
             <View>
               <Text style={styles.tempText}> {this.state.current_temperature} &deg;C</Text>
             </View>
@@ -98,12 +103,13 @@ function describeArc(x, y, radius, startAngle, endAngle) {
   var d = [
     "M", start.x, start.y, "A", radius, radius, 0, arcSweep, 0, end.x, end.y
   ].join(" ");
+
   return d;       
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   toolbar: {
     alignItems: 'center',
@@ -121,28 +127,36 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    backgroundColor: '#3A3B5D',
-    alignItems: 'center'
+    backgroundColor: '#f2f2f2',
+    alignItems: 'center',
   },
-  header: {
-    fontSize: 30,
-    color: "#FFF",
-    marginVertical: 30,
-    textAlign: 'center'
+  contentBox: {
+    backgroundColor: 'white',
+    elevation: 5,
+    marginTop: 15,
+    padding: 20,
+    width: width - 30,
   },
   detail: {
-    fontSize: 25,
-    color: "#FFF",
+    color: '#828282',
+    fontSize: 18,
     fontWeight: "300",
     paddingVertical: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  tempText: {
-    fontSize: 60,
-    color: "#FFF",
+  name: {
+    color: '#292942',
+    fontSize: 23,
+    fontWeight: '500',
   },
   svgContainer: {
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    marginVertical: 15,
+  },
+  tempText: {
+    color: '#414182',
+    fontSize: 60,
+  },
 });
