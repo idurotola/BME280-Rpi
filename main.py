@@ -45,11 +45,11 @@ def handle_exception(e):
 def push_to_pubnub(data):
     try:
         envelope = pubnub.publish().channel(channel_name).message({
-			"id": data.id,
-			"timestamp": data.timestamp,
-			"temperature": data.temperature,
-			"pressure": data.pressure,
-			"humidity": data.humidity
+			"id": str(data.id),
+			"timestamp": str(data.timestamp),
+			"temperature": str(data.temperature),
+			"pressure": str(data.pressure),
+			"humidity": str(data.humidity)
 	    }).sync()
         GPIO.output(20,GPIO.LOW)
     except PubNubException as e:
