@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "slug": "know-remote-temperature-on-your-phone",
     "sdkVersion": "26.0.0",
+    "orientation":"portrait",
     "android": {
       "package": "com.greasenetwork.thermonitor"
     }
