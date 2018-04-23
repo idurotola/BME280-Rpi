@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, WebView } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Dimensions, WebView } from 'react-native';
 import PubNub from 'pubnub';
 import { Constants, Svg } from 'expo';
  
@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
     const d  = this._handle_draw_arc(svgWidth);
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.toolbar}>
           <View style={styles.titleBox}>
             <Text style={styles.title}>Remote Temperature Monitor</Text>
@@ -76,12 +76,12 @@ export default class HomeScreen extends React.Component {
             <Svg.Path d={d} fill="none" stroke="#f08824" strokeWidth={svgWidth/50} />
             <Svg.Circle cx={svgWidth/2} cy={svgWidth/2} r={svgWidth/2.9629} strokeWidth={1} stroke="#fff" fill="#fff" />
             <Svg.Text x="45%" y="50%" fill="#414182" dy=".3em" textAnchor="middle" fontSize="40">{this.state.current_temperature}</Svg.Text>
-            <Svg.Text x="60%" y="50%" fill="#414182" dy=".3em" textAnchor="middle" fontSize="40">
+            <Svg.Text x="65%" y="50%" fill="#414182" dy=".3em" textAnchor="middle" fontSize="40">
               &#8451;
             </Svg.Text>
           </Svg>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
