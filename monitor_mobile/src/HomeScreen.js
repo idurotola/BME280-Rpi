@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, WebView } from 'react-native';
 import PubNub from 'pubnub';
 import { Constants, Svg } from 'expo';
  
@@ -75,9 +75,10 @@ export default class HomeScreen extends React.Component {
             <Svg.Circle cx={svgWidth/2} cy={svgWidth/2} r={svgWidth/2.89855} strokeWidth={svgWidth/50} stroke="#efefef" fill="#efefef" />
             <Svg.Path d={d} fill="none" stroke="#f08824" strokeWidth={svgWidth/50} />
             <Svg.Circle cx={svgWidth/2} cy={svgWidth/2} r={svgWidth/2.9629} strokeWidth={1} stroke="#fff" fill="#fff" />
-            <View>
-              <Text style={styles.tempText}> {this.state.current_temperature} &deg;C</Text>
-            </View>
+            <Svg.Text x="45%" y="50%" fill="#414182" dy=".3em" textAnchor="middle" fontSize="40">{this.state.current_temperature}</Svg.Text>
+            <Svg.Text x="60%" y="50%" fill="#414182" dy=".3em" textAnchor="middle" fontSize="40">
+              &#8451;
+            </Svg.Text>
           </Svg>
         </View>
       </View>
