@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
     const d  = this._handle_draw_arc(svgWidth);
 
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.toolbar}>
           <View style={styles.titleBox}>
             <Text style={styles.title}>Remote Temperature Monitor</Text>
